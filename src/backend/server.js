@@ -20,4 +20,6 @@ async function run() {
 }
 run().catch(console.error);
 
+// HELPFUL REFERENCES:
 // https://www.w3schools.com/mongodb/mongodb_nodejs_connect_database.php
+// https://github.com/Saurabh-pec/Ecommerce-Management-DBMS_Project-/tree/main
