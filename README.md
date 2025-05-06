@@ -15,19 +15,24 @@ Sarii is an e-commerce web application that:
 - Promotes **transparency and direct trade** between farmers and consumers, minimizing the middleman.
 
 ---
-
-## ![GitHub](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons/icons/github.svg) GitHub Workflow 
-1. Clone the Repository 
-2. Checkout set-up branch
-3. Create your own working branch from this with the branch-named after the page ur working on (ie. git branch login-page)
-4. Open 2 terminals (1 for backend and 1 for frontend) and run npm i on both directories
-5. Use commands npm run dev in frontend terminal and node server.js on backend terminal
-
 Sarii is an e-commerce web application that:
 
 - Enables **customers** to browse, shop, and order fresh crops and poultry products.
 - Empowers the **Department of Agriculture** to manage user accounts, product listings, orders, and sales reports.
 - Promotes **transparency and direct trade** between farmers and consumers, minimizing the middleman.
+
+---
+
+## <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" width="22" style="vertical-align:middle" /> GitHub Workflow
+
+1. Clone the repository  
+2. Checkout `set-up` branch  
+3. Create your own working branch named after the page you're working on  
+   (e.g. `git checkout -b login-page`)
+4. Open two terminals (one for backend, one for frontend)  
+5. Run `npm install` in both directories
+6. Start the project with:
+   - `npm run dev` in the frontend terminal     - `node server.js` in the backend terminal
 
 ---
 
