@@ -23,7 +23,7 @@ Sarii is an e-commerce web application that:
 
 ---
 
-## <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" width="25" style="filter: invert(100%); vertical-align: middle;" />&nbsp;GitHub Workflow
+## <img src="https://raw.githubusercontent.com/edent/SuperTinyIcons/master/images/svg/github.svg" width="25" style="vertical-align: middle;" />&nbsp;GitHub Workflow
 
 1. Clone the repository  
 2. Checkout `set-up` branch  
