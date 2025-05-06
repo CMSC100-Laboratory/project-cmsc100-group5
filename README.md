@@ -16,6 +16,21 @@ Sarii is an e-commerce web application that:
 
 ---
 
+## ![GitHub](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons/icons/github.svg) GitHub Workflow 
+1. Clone the Repository 
+2. Checkout set-up branch
+3. Create your own working branch from this with the branch-named after the page ur working on (ie. git branch login-page)
+4. Open 2 terminals (1 for backend and 1 for frontend) and run npm i on both directories
+5. Use commands npm run dev in frontend terminal and node server.js on backend terminal
+
+Sarii is an e-commerce web application that:
+
+- Enables **customers** to browse, shop, and order fresh crops and poultry products.
+- Empowers the **Department of Agriculture** to manage user accounts, product listings, orders, and sales reports.
+- Promotes **transparency and direct trade** between farmers and consumers, minimizing the middleman.
+
+---
+
 ## 🛠️ Tech Stack
 
 | Layer         | Technology         |
