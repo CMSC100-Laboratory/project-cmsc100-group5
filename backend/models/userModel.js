@@ -27,5 +27,5 @@ const UserModel = mongoose.Schema({
     }
 });
 
-const User = mongoose.model("User", orderTransactionModel);
+const User = mongoose.model("User", UserModel);
 export default User;
