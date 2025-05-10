@@ -33,9 +33,9 @@ needle.post("http://localhost:3000/update-product-type",
         if(!err) console.log(res.body);
 });
 
-needle.post("http://localhost:3000/remove-product",
-    { productId: '681ede0ff6ae71948edbc016'},
-    { json: true }, 
-    (err, res) => {
-        if(!err) console.log(res.body);
-});
+// needle.post("http://localhost:3000/remove-product",
+//     { productId: '681ede0ff6ae71948edbc016'},
+//     { json: true }, 
+//     (err, res) => {
+//         if(!err) console.log(res.body);
+// });

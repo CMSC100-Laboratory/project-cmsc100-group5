@@ -82,7 +82,7 @@ const updateProductType = async (req, res) => {
     const { productId, newType } = req.body; // newType should be either 'crops' or 'poultry'
 
     //validate input newType?? type can only be (1) crop / (2) poultry / (3) others 
-    if(![1,2,3].includes(type)){
+    if(![1,2,3].includes(newType)){
         res.status(400).json({ message: 'Invalid type'});
     }
 
