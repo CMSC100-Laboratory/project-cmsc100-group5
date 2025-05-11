@@ -11,10 +11,18 @@ const getSalesReport = async (req, res) => {
       const productsSold = [];
       const currentYear = new Date().getFullYear();
       const currentMonth = new Date().getMonth() + 1;
+      const currentDay = new Date().getDate();
+      const currentWeek = Math.ceil(currentDay/7);
       let totalSales = 0
       let yearlySales = 0;
       let monthlySales = 0;
-
+      let weeklySales = 0;
+        
+      // iterates through orders and cross references through products to check the name and price
+      // as we iterate through, we check if the current order meets the criteria (either within the current week,
+      // within the current month, or within the current year) and adds the sales to the appropriate variable
+      // all sales will be added to the totalSales variable and all [{products sold:corresponding price}] will
+      // be placed inside an object within a list (productsSold)
       for (let i = 0; i < orders.length; i++)
       { 
 
@@ -24,9 +32,16 @@ const getSalesReport = async (req, res) => {
             {
                 if (products[j]["_id"].equals(orders[i]["productId"]))
                 {
+            
                     if (orders[i]["date"].getMonth() + 1 == currentMonth)
                     {
                         monthlySales += products[j]["price"] * orders[i]["orderQuantity"];
+
+                        if (Math.ceil(orders[i]["date"].getDate()/7) == currentWeek)
+                        {
+                            weeklySales += products[j]["price"] * orders[i]["orderQuantity"];
+                        }
+
                     }
                     if (orders[i]["date"].getFullYear() == currentYear)
                     {
@@ -40,9 +55,11 @@ const getSalesReport = async (req, res) => {
             }
         }
       }
+      console.log(weeklySales)
       console.log(monthlySales)
       console.log(yearlySales)
       console.log(totalSales)
+      console.log(productsSold)
       res.status(200).json("hello");
     } 
     catch (error) 
