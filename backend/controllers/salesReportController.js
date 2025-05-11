@@ -32,20 +32,19 @@ const getSalesReport = async (req, res) => {
             {
                 if (products[j]["_id"].equals(orders[i]["productId"]))
                 {
-            
-                    if (orders[i]["date"].getMonth() + 1 == currentMonth)
-                    {
-                        monthlySales += products[j]["price"] * orders[i]["orderQuantity"];
-
-                        if (Math.ceil(orders[i]["date"].getDate()/7) == currentWeek)
-                        {
-                            weeklySales += products[j]["price"] * orders[i]["orderQuantity"];
-                        }
-
-                    }
                     if (orders[i]["date"].getFullYear() == currentYear)
                     {
                         yearlySales += products[j]["price"] * orders[i]["orderQuantity"];
+                        if (orders[i]["date"].getMonth() + 1 == currentMonth)
+                        {
+                            monthlySales += products[j]["price"] * orders[i]["orderQuantity"];
+
+                            if (Math.ceil(orders[i]["date"].getDate()/7) == currentWeek)
+                            {
+                                weeklySales += products[j]["price"] * orders[i]["orderQuantity"];
+                            }
+
+                        }
                     }
 
                     totalSales += products[j]["price"] * orders[i]["orderQuantity"];
