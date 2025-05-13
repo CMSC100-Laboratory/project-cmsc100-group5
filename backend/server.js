@@ -3,12 +3,13 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
+import shopRouter from './routers/ShopRoutes.js';
 
 dotenv.config();    
 
 // Middleware
-const uri = process.env.MONGODB_URI;
-const PORT = process.env.SERVER_PORT;
+const uri = "mongodb+srv://farmtotable:5nuANTz8Mu8ext6U@cluster0.nfgraqz.mongodb.net/Farm-to-Table?retryWrites=true&w=majority&appName=Cluster0";
+const PORT = 3000;
 console.log("MongoDB URI: ", uri);
 
 //Initialize MongoDB connection
@@ -43,7 +44,9 @@ app.use(cors());
 // Body parser middleware
 app.use(bodyParser.json());
 
-//Initialize Routers Here
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+shopRouter(app);
 
 //start server
 connectDB().then(() => {
