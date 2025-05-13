@@ -9,7 +9,7 @@ function Card(name, sales) {
         <div className="px-6 py-4">
           <div className="font-bold text-xl mb-2">{name} w/ PHP {sales}</div>
           <p className="text-gray-700 text-base">
-            This is a simple card component built with Tailwind CSS. You can reuse this structure anywhere.
+            Kaboom!
           </p>
         </div>
         <div className="px-6 pt-4 pb-4">
