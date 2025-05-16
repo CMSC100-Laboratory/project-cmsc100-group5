@@ -59,7 +59,7 @@ const getSalesReport = async (req, res) => {
       console.log(yearlySales)
       console.log(totalSales)
       console.log(productsSold)
-      res.status(200).json("hello");
+      res.status(200).json({ productsSold: productsSold, week: weeklySales, month: monthlySales, year: yearlySales, total: totalSales});
     } 
     catch (error) 
     {
