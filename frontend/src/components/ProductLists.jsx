@@ -1,4 +1,4 @@
-// ProductList.js
+// List of Products
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import axios to make API calls
 
@@ -34,10 +34,9 @@ const ProductList = () => {
       <div className="product-list">
         {products.map((product) => (
           <div key={product._id} className="product-item">
-            <img src={product.imageUrl} alt={product.name} />
             <h2>{product.name}</h2>
             <p>{product.description}</p>
-            <p><strong>${product.price}</strong></p>
+            <p><strong>Php {product.price}</strong></p>
           </div>
         ))}
       </div>
