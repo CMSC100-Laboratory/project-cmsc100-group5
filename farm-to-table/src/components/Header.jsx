@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function Header() {
     return (
       <nav className="bg-[#14422C] text-white p-4">
@@ -9,12 +11,11 @@ function Header() {
   
 
           <div className="hidden md:flex space-x-4">
-            <a href="#" className="hover:underline">User</a>
-            <a href="#" className="hover:underline">Products</a>
-            <a href="#" className="hover:underline">Order</a>
-            <a href="#" className="hover:underline">Sales</a>
+            <Link to="/orders" className="hover:underline">Order</Link>
+            <Link to="/sales" className="hover:underline">Sales</Link>
+            <Link to="/users" className="hover:underline">Users</Link>
+            <Link to="/products" className="hover:underline">Products</Link>
           </div>
-  
 
           <div className="mt-2 md:mt-0">
             <input

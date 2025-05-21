@@ -4,8 +4,8 @@ import Header from './Header';
 import Products from './Products';
 import Orders from './Orders';
 import axios from "axios";
-import { useState, useEffect } from 'react'
-
+import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
 
@@ -61,10 +61,12 @@ function App() {
     return (
         <>
             <Header />
-            {/* <Sales productsSold={productsSold} sales={sales}/> */}
-            <Users users={users}/>
-            <Products products={products}/>
-            <Orders orders={orders}/>
+            <Routes>
+                {/* <Route path="/sales" element={<Sales productsSold={productsSold} sales={sales} />} /> */}
+                <Route path="/users" element={<Users users={users} />} />
+                <Route path="/products" element={<Products products={products} />} />
+                <Route path="/orders" element={<Orders orders={orders} />} />
+            </Routes>
             
         </>
     )
