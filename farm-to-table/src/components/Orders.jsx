@@ -16,7 +16,7 @@ function Orders(props){
                                  <th className="px-6 py-3 text-center text-sm font-medium text-white">
                                     Status
                                 </th>
-                                <th className="px-6 py-3 text-center text-sm font-medium text-white">
+                                <th className="px-6 py-3 text-center text-sms font-medium text-white">
                                     Email
                                 </th>
                                 <th className="px-6 py-3 text-center text-sm font-medium text-white">
@@ -27,7 +27,7 @@ function Orders(props){
                         <tbody className="divide-y divide-gray-200">
                             {orders.map((order) => (
                                 <tr key={order._id}>
-                                    <td className="px-6 py-4 text-sm text-gray-800 text-center">{order.productId.name} Php {order.productId.price}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-800 text-center">{order.productId ? `${order.productId.name} (Php ${order.productId.price})` : 'Product not found'}</td>
                                     <td className="px-6 py-4 text-sm text-gray-800 text-center">{order.orderQuantity}</td>
                                     <td className="px-6 py-4 text-sm text-gray-800 text-center">{order.orderStatus}</td>
                                     <td className="px-6 py-4 text-sm text-gray-800 text-center">{order.email}</td>
