@@ -46,3 +46,13 @@ import needle from "needle";
 //     (err, res) => {
 //         if(!err) console.log(res.body);
 // });
+
+needle.get("http://localhost:3000/sort-products?sortBy=quantity&order=asc", (err, res) => {
+    if (!err) console.log(res.body);
+    else console.error(err);
+});
+
+needle.get("http://localhost:3000/get-all-orders", (err, res) => {
+    if(!err) console.log(res.body);
+    else console.error(err);
+});

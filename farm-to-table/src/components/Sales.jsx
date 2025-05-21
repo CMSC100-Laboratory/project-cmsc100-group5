@@ -1,9 +1,9 @@
 import Table from './Table.jsx'
 
-function Sales(props) {
+function Sales({items, report}) {
 
-    let productsSold = props.productsSold;
-    let sales = props.sales;
+    let productsSold = items.productsSold;
+    let sales = report.sales;
     console.log(sales);
 
     let listSoldProducts = productsSold;

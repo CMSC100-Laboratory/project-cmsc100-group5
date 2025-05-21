@@ -10,11 +10,11 @@ import OrderTransaction from "../models/orderTransactionModel.js";
 // GET: display transactions
 const getAllOrders = async (req, res) => {
     try {
-      const orders = await OrderTransaction.find();
+      const orders = await OrderTransaction.find().populate('productId', 'name price');
       console.log(orders);
-      res.status(200).json(orders);
+      return res.status(200).json(orders);
     } catch (error) {
-      res.status(500).json({ message: 'Error retrieving orders', error });
+      return res.status(500).json({ message: 'Error retrieving orders', error });
     }
   };
 
@@ -24,7 +24,7 @@ const updateOrderStatus = async (req, res) => {
     
     //validate req.body
     if(![0,1,2].includes(status)){
-      res.status(400).json({ message: 'Unable to update due to invalid status in body'});
+      return res.status(400).json({ message: 'Unable to update due to invalid status in body'});
     }
     
     try {
@@ -36,9 +36,9 @@ const updateOrderStatus = async (req, res) => {
       order.orderStatus = status;
       await order.save();
   
-      res.status(200).json({ message: 'Order status updated', order });
+      return res.status(200).json({ message: 'Order status updated', order });
     } catch (error) {
-      res.status(500).json({ message: 'Error updating order status', error });
+      return res.status(500).json({ message: 'Error updating order status', error });
     }
   };
 

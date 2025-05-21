@@ -1,10 +1,5 @@
-
-
 function Users(props) {
-
-    let users = props.users;
-
-
+    let users = props.users
     return (
         <>
             <div className="w-full flex justify-center mt-10">
@@ -25,7 +20,7 @@ function Users(props) {
                         </thead>
                         <tbody className="divide-y divide-gray-200">
                             {users.map((user) => (
-                                <tr>
+                                <tr key={user._id}>
                                     <td className="px-6 py-4 text-sm text-gray-800 text-center">{user[0]}</td>
                                     <td className="px-6 py-4 text-sm text-gray-800 text-center">{user[1]}</td>
                                     <td className="px-6 py-4 text-sm text-gray-800 text-center">{user[2]}</td>

@@ -1,7 +1,7 @@
 // List of Products
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import axios to make API calls
-
+  
 const ProductList = () => {
   const [products, setProducts] = useState([]); // State to store products
   const [loading, setLoading] = useState(true);  // State to manage loading status

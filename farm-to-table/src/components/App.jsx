@@ -1,6 +1,8 @@
 import Sales from './Sales';
 import Users from './Users';
 import Header from './Header';
+import Products from './Products';
+import Orders from './Orders';
 import axios from "axios";
 import { useState, useEffect } from 'react'
 
@@ -10,6 +12,8 @@ function App() {
     const [productsSold, setArray] = useState([]);
     const [sales, setSales] = useState([]);
     const [users, setUsers] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [orders, setOrder] = useState([]);
 
     const fetchSales = async () => 
     {
@@ -22,11 +26,36 @@ function App() {
     {
         const response = await axios.get("http://localhost:3000/get-all-users");
         setUsers(response.data.users)
+        console.log(response.data.users)
+        
+    }
+
+    const fetchProducts = async (sortBy = 'quantity', order = 'asc') => 
+    {
+        try {
+            const response = await axios.get(`http://localhost:3000/sort-products?sortBy=${sortBy}&order=${order}`);
+            setProducts(response.data);
+        } catch (error) {
+            console.error('Failed to fetch products:', error);
+        }
+    }
+
+    const fetchOrders = async () => 
+    {
+        try{
+            const response = await axios.get("http://localhost:3000/get-all-orders");
+            setOrder(response.data)
+            console.log(response.data)
+        } catch (error) {
+            console.error('Failed to fetch orders:', error);
+        }
     }
 
     useEffect(() => {
         fetchSales();
         fetchUsers();
+        fetchProducts('quantity', 'asc');
+        fetchOrders();
     }, [])
 
     return (
@@ -34,6 +63,9 @@ function App() {
             <Header />
             {/* <Sales productsSold={productsSold} sales={sales}/> */}
             <Users users={users}/>
+            <Products products={products}/>
+            <Orders orders={orders}/>
+            
         </>
     )
 }
