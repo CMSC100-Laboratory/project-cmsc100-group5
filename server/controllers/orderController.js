@@ -10,7 +10,7 @@ import OrderTransaction from "../models/orderTransactionModel.js";
 // GET: display transactions
 const getAllOrders = async (req, res) => {
     try {
-      const orders = await OrderTransaction.find().populate('productId', 'name price');
+      const orders = await OrderTransaction.find().sort({ date: -1 }).populate('productId', 'name price');
       console.log(orders);
       return res.status(200).json(orders);
     } catch (error) {
