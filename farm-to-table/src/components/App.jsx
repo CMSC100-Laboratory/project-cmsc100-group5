@@ -72,7 +72,7 @@ function App() {
             });
 
             const result = await response.json();
-            console.log(result.data);
+            console.log(result.order);
             if (!response.ok) {
                 console.log(response);
                 throw new Error(result.message || 'Failed to update order status');
