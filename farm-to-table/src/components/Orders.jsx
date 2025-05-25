@@ -1,5 +1,5 @@
 function Orders(props) {
-  const { orders, onUpdateStatus } = props;
+  const { orders, onUpdateStatus, decreaseQuantity, fetchProductById } = props;
   const statusLabels = {
     0: 'Pending',
     1: 'Completed',
@@ -35,18 +35,46 @@ function Orders(props) {
                     <td className="px-6 py-4 text-sm text-gray-800 text-center">{order.email}</td>
                     <td className="px-6 py-4 text-sm text-gray-800 text-center">{order.date} - ({order.time})</td>
                     <td className="px-6 py-4 text-sm text-center space-x-2 whitespace-nowrap">
-                      <button
-                        onClick={() => onUpdateStatus(order._id, 1)}
-                        disabled={order.orderStatus === 2}
+                    <button
+                      onClick={async () => {
+                          try {
+                            const productId = order.productId._id;
+                            if (!productId) {
+                              alert('Invalid product ID.');
+                              return;
+                            }
+                            const product = await fetchProductById(productId);
+                            if (!product) {
+                              alert('Product not found.');
+                              return;
+                            }
+                            if (product.quantity === 0) {
+                              alert('Cannot deliver. Product is out of stock.');
+                              return;
+                            }
+                            if (product.quantity < order.orderQuantity) {
+                              alert('Cannot deliver. Insufficient stock.');
+                              return;
+                            }
+                            await decreaseQuantity(productId, order.orderQuantity);
+                            await onUpdateStatus(order._id, 1);
+                          } catch (error) {
+                            console.error('Error processing delivery:', error);
+                            alert('Something went wrong while delivering the product.');
+                          }
+                        }}
+                        disabled={order.orderStatus !== 0}
                         className={`px-3 py-1 rounded text-white ${
-                          order.orderStatus !== 0 ? 'bg-green-300 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
+                          order.orderStatus !== 0
+                            ? 'bg-green-300 cursor-not-allowed'
+                            : 'bg-green-600 hover:bg-green-700'
                         }`}
                       >
                         Deliver
                       </button>
                       <button
                         onClick={() => onUpdateStatus(order._id, 2)}
-                        disabled={order.orderStatus === 1}
+                        disabled={order.orderStatus !== 0}
                         className={`px-3 py-1 rounded text-white ${
                           order.orderStatus !== 0 ? 'bg-red-300 cursor-not-allowed' : 'bg-red-600 hover:bg-red-700'
                         }`}

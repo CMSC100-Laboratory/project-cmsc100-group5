@@ -93,7 +93,7 @@ function App() {
         }
     };
 
-    const updateOrderStatus = async ({orderId, newStatus}) => {
+    const updateOrderStatus = async (orderId, newStatus) => {
         try {
             const response = await fetch("http://localhost:3000/update-order-status", {
                 method: 'POST',
@@ -175,6 +175,45 @@ function App() {
         }
     }
 
+    const fetchProductById = async (productId) => {
+        try {
+            const response = await fetch(`http://localhost:3000/get-product?id=${productId}`);
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.message || 'Failed to fetch product');
+            return result.product;
+        } catch (error) {
+            console.error('Error fetching product:', error);
+            return null;
+        }
+    };
+
+    const decreaseQuantity = async (productId, quantityToDeduct) => {
+        try {
+            const response = await fetch("http://localhost:3000/decrease-quantity", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({productId, quantityToDeduct}),
+            });
+            const result = await response.json();
+            if (!response.ok) {
+                console.log(response);
+                throw new Error(result.message || 'Failed to decrease quantity.');
+            }
+            // if response is 'Insufficient stock', show warning
+            if(result.message === 'Insufficient stock'){
+                //display warning 
+                console.log('Product has insufficient stock!');
+            }
+
+            console.log(result.product);            
+            fetchProducts('quantity', 'asc'); // Refresh product list after successful update
+        } catch (error){
+            console.error('Failed to decrease quantity:', error.message);
+        }
+    }
+
     useEffect(() => {
         fetchSales();
         fetchUsers();
@@ -196,7 +235,13 @@ function App() {
                 updateProduct={updateProduct}
                 removeProduct={removeProduct}
                 />} />
-                <Route path="/orders" element={<Orders orders={orders} onUpdateStatus={updateOrderStatus} />} />
+                <Route path="/orders" 
+                element={
+                    <Orders orders={orders} 
+                    onUpdateStatus={updateOrderStatus} 
+                    decreaseQuantity={decreaseQuantity} 
+                    fetchProductById={fetchProductById}
+                />} />
             </Routes>
         </>
     );
