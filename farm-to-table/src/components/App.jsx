@@ -39,7 +39,7 @@ function App() {
         }
     };
 
-    const fetchProducts = async (sortBy = 'quantity', order = 'asc') => {
+    const fetchProducts = async (sortBy, order) => {
         try {
             const response = await axios.get(`http://localhost:3000/sort-products?sortBy=${sortBy}&order=${order}`);
             setProducts(response.data);
@@ -47,6 +47,41 @@ function App() {
             console.error('Failed to fetch products:', error);
         }
     };
+
+    const sortProducts = async (sortBy, order) => {
+        try {
+            const response = await axios.get(`http://localhost:3000/sort-products?sortBy=${sortBy}&order=${order}`);
+            setProducts(response.data);
+        } catch (error) {
+            console.error('Failed to sort products:', error);
+        }
+    };
+
+    const addProduct = async ({name, type, price, description, quantity}) => {
+        try{
+            const response = await fetch("http://localhost:3000/add-product", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name,
+                    type: Number(type),
+                    price: Number(price),
+                    description,
+                    quantity: Number(quantity),
+                }),
+            });
+            const data  = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to add product');
+            }
+            setProducts((previousState)=>[...previousState, data.product])
+            console.log("Product added to inventory:", data.product);
+        }catch (error){
+            console.error('Failed to add product:', error.message);
+        }
+    }
 
     const fetchOrders = async () => {
         try {
@@ -58,7 +93,7 @@ function App() {
         }
     };
 
-    const updateOrderStatus = async (orderId, newStatus) => {
+    const updateOrderStatus = async ({orderId, newStatus}) => {
         try {
             const response = await fetch("http://localhost:3000/update-order-status", {
                 method: 'POST',
@@ -85,6 +120,61 @@ function App() {
         }
     };
 
+    const updateProduct = async ({ productId, name, type, price, description, quantity }) => {
+        const updatedFields = { productId };
+        
+        //validate request body
+        if (name !== undefined && name.trim() !== "") updatedFields.name = name;
+        if (type !== undefined && type !== "") updatedFields.type = Number(type);
+        if (price !== undefined && price !== "") updatedFields.price = Number(price);
+        if (description !== undefined && description.trim() !== "") updatedFields.description = description;
+        if (quantity !== undefined && quantity !== "") updatedFields.quantity = Number(quantity);
+
+        console.log("Updating product with:", updatedFields);
+
+        try {
+            const response = await fetch("http://localhost:3000/update-product", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedFields),
+            });
+
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result.message || 'Failed to update product');
+            }
+            console.log('Updated product:', result.product);
+            fetchProducts('quantity', 'asc'); //refresh product list after successful update
+        } catch (error) {
+            console.error('Failed to update product:', error.message);
+        }
+    };
+
+    const removeProduct = async (productId) => {
+        try{
+            const response = await fetch("http://localhost:3000/remove-product", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({productId}),
+            });
+            const result = await response.json();
+            console.log(result.product);
+            if (!response.ok) {
+                console.log(response);
+                throw new Error(result.message || 'Failed to remove product.');
+            }
+
+            // Refresh product list after successful update
+            fetchProducts('quantity', 'asc');
+        }catch(error){
+            console.error('Failed to delete product:', error.message);
+        }
+    }
+
     useEffect(() => {
         fetchSales();
         fetchUsers();
@@ -98,7 +188,14 @@ function App() {
             <Routes>
                 {/* <Route path="/sales" element={<Sales productsSold={productsSold} sales={sales} />} /> */}
                 <Route path="/users" element={<Users users={users} />} />
-                <Route path="/products" element={<Products products={products} />} />
+                <Route path="/products" 
+                element={
+                <Products products={products} 
+                sortProducts={sortProducts} 
+                addProduct={addProduct} 
+                updateProduct={updateProduct}
+                removeProduct={removeProduct}
+                />} />
                 <Route path="/orders" element={<Orders orders={orders} onUpdateStatus={updateOrderStatus} />} />
             </Routes>
         </>
