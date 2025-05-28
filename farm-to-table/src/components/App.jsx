@@ -32,8 +32,8 @@ function App() {
     return (
         <>
             <Header />
-            {/* <Sales productsSold={productsSold} sales={sales}/> */}
-            <Users users={users}/>
+            <Sales productsSold={productsSold} sales={sales}/>
+            {/* <Users users={users}/> */}
         </>
     )
 }
