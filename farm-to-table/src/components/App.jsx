@@ -17,6 +17,7 @@ function App() {
     const fetchSales = async () => {
         try {
             const response = await axios.get("http://localhost:3000/sales-report");
+            console.log(response.data.productsSold)
             setProductsSold(response.data.productsSold);
             setSales([
                 response.data.week,
@@ -213,20 +214,19 @@ function App() {
             console.error('Failed to decrease quantity:', error.message);
         }
     }
-
     useEffect(() => {
+        console.log("fir")
         fetchSales();
         fetchUsers();
         fetchProducts('quantity', 'asc');
         fetchOrders();
     }, []);
-
     return (
         <>
             <Header />
             <Routes>
-                {/* <Route path="/sales" element={<Sales productsSold={productsSold} sales={sales} />} /> */}
-                <Route path="/users" element={<Users users={users} />} />
+                <Route path = "/sales" element={<Sales productsSold={productsSold} sales={sales}/>}/>
+                <Route path="/users" element={<Users users={users}/>}/>
                 <Route path="/products" 
                 element={
                 <Products products={products} 
