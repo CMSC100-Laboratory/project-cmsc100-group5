@@ -8,13 +8,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Merchant from './pages/Merchant.jsx'
 import Consumer from './pages/Consumer.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
+import Homepage from './pages/Homepage/Homepage.jsx'
 
 
 function App() {
   const routes = [
     {
       path: "/",
-      element: <Login/>
+      element: <Homepage/>
     },
     {
       path: "/login",
