@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import authenticationRouter from './routers/authenticationRouter.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();    
 
@@ -40,9 +41,16 @@ async function connectDB() {
 const app = express();
 
 // Cors configuration
-app.use(cors());
+app.use(cors(
+    {
+    origin: 'http://localhost:5173',
+    credentials: true,               
+    }
+));
 // Body parser middleware
 app.use(bodyParser.json());
+//Cookie Parser Middleware
+app.use(cookieParser());
 
 //Initialize Routers Here
 authenticationRouter(app)

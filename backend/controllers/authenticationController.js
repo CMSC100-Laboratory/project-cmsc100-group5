@@ -10,6 +10,7 @@ const createToken = (user) => {
     return jwt.sign(
         {
             email: user.email,
+            firstName: user.FirstName,
             userType: user.isMerchant ? "Merchant" : "Customer"
         },
         process.env.JWT_SECRET,
@@ -65,7 +66,6 @@ const login = async (req, res) => {
 
         //Validate credentials
         if(!user || !(await bcrypt.compare(password, user.password))){
-            console.log("User not Found")
             return res.status(401).json({message: 'Invalid Credentials'});
         }
 
@@ -80,7 +80,7 @@ const login = async (req, res) => {
             sameSite: 'Lax'
         });
 
-        res.status(201).json({message: "Logged In Successfully", token})
+        res.status(201).json({message: "Logged In Successfully"})
 
     } catch (error) {
         res.status(500).json({message: "Server Error", error})
@@ -92,4 +92,17 @@ const logout = (req,res) => {
     res.status(200).json({message:"Logged out Successfully"})
 }
 
-export {signUp, login, logout};
+//Function for retrieve user info 
+
+const getProfile = (req,res) => {
+    res.status(201).json({
+        message: "Access Granted",
+        user: {
+            name: req.user.firstName,
+            userType: req.user.userType,
+            email: req.user.email
+        }
+    })
+}
+
+export {signUp, login, logout, getProfile};

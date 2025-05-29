@@ -1,2 +1,12 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cal+Sans&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+@theme {
+    --color-primary: #14422C;
+    --color-secondary: #7EB839;
+    --color-complement: #F5FFF9;
+    --font-lora: "Lora", serif;
+}
+
+
 

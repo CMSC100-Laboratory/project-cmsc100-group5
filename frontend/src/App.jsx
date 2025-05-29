@@ -1,14 +1,14 @@
-import { useState } from 'react'
+
 import './styles.css'
+import Login from './pages/Login/Login.jsx'
+import Signup from './pages/Signup/Signup.jsx'
+import Unauthorized from './components/Unauthorized.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <h1 className="text-green-600 font-bold text-2xl">Hello World</h1>
-      </div>
+      <Unauthorized/>
     </>
   )
 }
