@@ -1,9 +1,37 @@
 import Table from './Table.jsx'
+import axios from "axios";
+import { useState, useEffect } from 'react';
 
-function Sales(props) {
 
-    let productsSold = props.productsSold;
-    let sales = props.sales;
+
+
+function Sales() {
+    const [totalSales, setSales] = useState([]);
+    const [totalProducts, setProductsSold] = useState([]);
+
+    const fetchSales = async () => {
+        try {
+            console.log("try")
+            const response = await axios.get("http://localhost:3000/sales-report");
+            console.log(response.data.productsSold)
+            setProductsSold(response.data.productsSold);
+            setSales([
+                response.data.week,
+                response.data.month,
+                response.data.year,
+                response.data.total
+            ]);
+        } catch (error) {
+            console.error('Failed to fetch sales:', error);
+        }
+      };
+
+    useEffect(() => {
+        fetchSales();
+    }, []);
+
+    let productsSold = totalProducts;
+    let sales = totalSales;
     console.log(sales);
 
     let listSoldProducts = productsSold;
