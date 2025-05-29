@@ -206,7 +206,7 @@ const Orders = ({ userEmail }) => {
                       {formatDate(transaction.date)} at {transaction.time}
                     </p>
                   </div>
-                  <div className="flex items-center">
+                  <div className="flex items-center space-x-7">
                     <span className={`text-sm font-medium rounded-full ${orderStatusMap[transaction.orderStatus]?.color}`}>
                       {orderStatusMap[transaction.orderStatus]?.text}
                     </span>
