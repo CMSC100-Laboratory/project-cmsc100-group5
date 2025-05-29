@@ -46,7 +46,7 @@ function Sales() {
     })
 
     for (let i = 0; i < listSoldProducts.length; i++) {
-        productItems.push(Table(keys[i], listSoldProducts[i][keys[i]]))
+        productItems.push(Table(keys[i], listSoldProducts[i][keys[i]][0], listSoldProducts[i][keys[i]][1]))
     }
 
     return (
@@ -93,6 +93,9 @@ function Sales() {
                             <tr>
                                 <th className="px-6 py-3 text-center text-sm font-medium text-white">
                                     Product Name
+                                </th>
+                                <th className="px-6 py-3 text-center text-sm font-medium text-white">
+                                    Product Quantity
                                 </th>
                                 <th className="px-6 py-3 text-center text-sm font-medium text-white">
                                     Product Sales
