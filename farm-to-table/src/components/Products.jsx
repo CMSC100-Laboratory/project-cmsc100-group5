@@ -49,11 +49,29 @@ function Products(props) {
     closeEditModal();
   };
 
+  const showMessage = (isValid) => {
+    alert(isValid ? "Form validated!" : "Please fill out all fields.");
+  };
+
+  // ensures each field is not null
+  const validateForm = () => {
+    const { name, type, price, description, quantity } = formData;
+    const isValid =
+      name &&
+      description &&
+      [1, 2, 3].includes(type) &&
+      !isNaN(price) && price >= 0 &&
+      !isNaN(quantity) && quantity >= 0;
+
+    showMessage(isValid);
+    return isValid;
+  };
+
   return (
     <>
       <div className="w-full flex justify-center mt-10">
         <div className="w-full max-w-3xl">
-          
+
           {/* Sort By Button */}
           <div className="flex justify-end mb-2 relative">
             <button
@@ -156,15 +174,17 @@ function Products(props) {
                         <button
                         onClick={()=> { 
                             console.log("Add Form Data:", formData);
-                            addProduct(formData);
-                            setShowAddModal(false);
-                            setFormData({
+                            if (validateForm()){
+                              addProduct(formData);
+                              setShowAddModal(false);
+                              setFormData({
                                 name: '',
                                 type: '',
                                 price: '',
                                 description: '',
                                 quantity: '',
-                            });
+                              });
+                            }
                         }}
                         className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                         >
@@ -175,7 +195,25 @@ function Products(props) {
                 </div>
                 )}
           </div>
-
+          {/* Number of Products Table */}
+          <div className="w-full flex justify-center mt-10">
+            <div className="w-full max-w-3xl bg-white shadow-md rounded-lg overflow-hidden">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-[#14422C]">
+                  <tr>
+                    <th className="px-6 py-3 text-center text-sm font-medium text-white">
+                      Number of Products
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  <tr>
+                    <td className="px-6 py-4 text-sm text-gray-800 text-center">{products.length}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
           {/* Products Table */}
           <div className="bg-white shadow-md rounded-lg overflow-hidden">
             <div className="overflow-x-auto">
@@ -205,7 +243,7 @@ function Products(props) {
                 <tbody className="divide-y divide-gray-200">
                   {products.length === 0 ? (
                     <tr>
-                      <td colSpan="5" className="text-center py-6 text-gray-500">
+                      <td colSpan="6" className="text-center py-6 text-gray-500">
                         No products available.
                       </td>
                     </tr>
@@ -228,7 +266,12 @@ function Products(props) {
                                 Edit
                             </button>
                             <button
-                                onClick={() => removeProduct(product._id)}
+                                onClick={() => {
+                                  if(window.confirm('Are you sure to delete this product?')){
+                                    removeProduct(product._id)
+                                  };
+                                 }
+                                }
                                 className="text-red-600 hover:text-red-800"
                             >
                                 Delete
@@ -326,25 +369,7 @@ function Products(props) {
   </div>
 )}
 
-      {/* Number of Products Table */}
-      <div className="w-full flex justify-center mt-10">
-        <div className="w-full max-w-3xl bg-white shadow-md rounded-lg overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-[#14422C]">
-              <tr>
-                <th className="px-6 py-3 text-center text-sm font-medium text-white">
-                  Number of Products
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              <tr>
-                <td className="px-6 py-4 text-sm text-gray-800 text-center">{products.length}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    
     </>
   );
 }
