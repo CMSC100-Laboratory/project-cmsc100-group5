@@ -36,7 +36,7 @@ function Sales(props) {
                                     Monthly Sales
                                 </th>
                                 <th className="px-6 py-3 text-center text-sm font-medium text-white">
-                                    Yearly Name
+                                    Yearly Sales
                                 </th>
                                 <th className="px-6 py-3 text-center text-sm font-medium text-white">
                                     Total Sales
@@ -46,10 +46,10 @@ function Sales(props) {
                         <tbody className="divide-y divide-gray-200">
                             {salesData.map((sale) => (
                                 <tr>
-                                    <td className="px-6 py-4 text-sm text-gray-800 text-center">{sale.week}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-800 text-center">{sale.month}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-800 text-center">{sale.year}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-800 text-center">{sale.total}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-800 text-center">₱{sale.week}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-800 text-center">₱{sale.month}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-800 text-center">₱{sale.year}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-800 text-center">₱{sale.total}</td>
                                 </tr>
                             ))}
                         </tbody>
