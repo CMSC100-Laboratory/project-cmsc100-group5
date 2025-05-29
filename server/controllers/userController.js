@@ -24,15 +24,26 @@ const getAllUsers = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    console.log("hellloooo");
     await User.deleteOne({email: req.body.email})
-    console.log("success")
     res.status(200).send("success");
   } catch (error) {
-    console.log("fail")
+    res.status(500).json({ message: 'Error deleting user', error });
+  }
+};
+
+const updateUser = async (req, res) => {
+  try {
+    await User.updateOne(
+      {email: req.body.email},
+      { $set: {FirstName: req.body.FirstName, email: req.body.newEmail, LastName: req.body.LastName}}
+      )
+      console.log("yes")
+    res.status(200).send("success");
+  } catch (error) {
+    console.log("no")
     res.status(500).json({ message: 'Error deleting user', error });
   }
 };
 
 
-export {getAllUsers, deleteUser};
+export {getAllUsers, deleteUser, updateUser};
