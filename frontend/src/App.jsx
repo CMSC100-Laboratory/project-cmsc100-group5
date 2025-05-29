@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-import Header from './components/Header';
+import Header from './components/Header'
 import Shop from './components/Shop';
 import Cart from './components/Cart';
+import Orders from './components/Order';
 
 function App() {
   const [cartCount, setCartCount] = useState(0);
@@ -38,6 +38,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Shop userEmail={userEmail} />} />
             <Route path="/cart" element={<Cart userEmail={userEmail} />} />
+            <Route path="/orders" element={<Orders userEmail={userEmail} />} />
           </Routes>
         </div>
       </div>

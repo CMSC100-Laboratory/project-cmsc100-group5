@@ -25,7 +25,11 @@ const imageMap = {
     'Garlic (250g)': 'garlic.png',
     'Brown Eggs (1 Dozen)': 'brown_eggs.png',
     'Sweet Mangoes (1kg)': 'mango.png',
-    'Tomatoes (1kg)': 'tomatoes.png',
+    'Tomato (1kg)': 'tomatoes.png',
+    'White eggs (1dozen)': 'white_eggs.png',
+    'Cilantro': 'cilantro.png',
+    'Coconut': 'coconut.png',
+    'Russet Potatoes': 'russet_potatoes.png',
     'Chicken Breast (1kg)': 'chicken_breast.png',
 };
 

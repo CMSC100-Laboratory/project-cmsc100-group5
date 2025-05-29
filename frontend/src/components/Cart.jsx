@@ -20,7 +20,7 @@ const imageMap = {
     'Pineapple (per piece)': 'pineapple.png',
     'Milkfish (per kg)': 'milkfish.png',
     'Cabbage (1 head)': 'cabbage.png',
-    'White Onions (1kg)': 'white-onion.png',
+    'White Onions (1kg)': 'white_onion.png',
     'Pumpkin (1kg)': 'pumpkin.png',
     'Red Rice (5kg)': 'red_rice.png',
     'Eggplant (1kg)': 'eggplant.png',
@@ -29,7 +29,11 @@ const imageMap = {
     'Garlic (250g)': 'garlic.png',
     'Brown Eggs (1 Dozen)': 'brown_eggs.png',
     'Sweet Mangoes (1kg)': 'mango.png',
-    'Tomatoes (1kg)': 'tomatoes.png',
+    'Tomato (1kg)': 'tomatoes.png',
+    'White eggs (1dozen)': 'white_eggs.png',
+    'Cilantro': 'cilantro.png',
+    'Coconut': 'coconut.png',
+    'Russet Potatoes': 'russet_potatoes.png',
     'Chicken Breast (1kg)': 'chicken_breast.png',
 };
 
@@ -51,7 +55,7 @@ const Cart = ({ userEmail }) => {
   const fetchCart = async () => {
     try {
       setLoading(true);
-      const response = await api.post('/cart/get', {
+      const response = await axios.post('http://localhost:3000/cart/get', {
         email: userEmail
       });
       
@@ -83,7 +87,7 @@ const Cart = ({ userEmail }) => {
     if (newQuantity < 1) return;
   
     try {
-      const response = await api.post('/cart/update', {
+      const response = await axios.post('http://localhost:3000/cart/update', {
         email: userEmail,
         productId,
         quantity: newQuantity,
@@ -120,7 +124,7 @@ const Cart = ({ userEmail }) => {
 
   const handleRemoveItem = async (productId) => {
     try {
-      const response = await api.post('/cart/remove', {
+      const response = await axios.post('http://localhost:3000/cart/remove', {
         email: userEmail,
         productId
       });
@@ -140,7 +144,7 @@ const Cart = ({ userEmail }) => {
     if (!window.confirm('Are you sure you want to clear your cart?')) return;
     
     try {
-      const response = await api.post('/cart/clear', {
+      const response = await axios.post('http://localhost:3000/cart/clear', {
         email: userEmail
       });
       
@@ -218,7 +222,7 @@ const Cart = ({ userEmail }) => {
           <button className="mt-3 bg-lime-700 hover:bg-lime-950 text-white font-bold py-2 px-6 rounded">
                   Shop now
             </button>
-        </Link>
+          </Link>
 
         </div>
       ) : (

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-//routes and reusable header 
 const Header = ({ cartCount = 0 }) => {
   return (
     <header className="bg-lime-900 shadow-md">
@@ -20,18 +19,24 @@ const Header = ({ cartCount = 0 }) => {
             <nav className="flex space-x-4 mr-6">
               <Link 
                 to="/" 
-                className="text-white hover:text-lime-500 font-medium transition-colors"
+                className="text-white hover:text-lime-300 font-medium transition-colors"
               >
                 Shop
               </Link>
               <Link 
                 to="/cart" 
-                className="text-white hover:text-lime-500 font-medium transition-colors flex items-center"
+                className="text-white hover:text-lime-300 font-medium transition-colors flex items-center"
               >
                 Cart
                 <span className="ml-1 bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full" id="cart-count">
                   {cartCount}
                 </span>
+              </Link>
+              <Link 
+                to="/orders" 
+                className="text-white hover:text-lime-300 font-medium transition-colors"
+              >
+                Orders
               </Link>
             </nav>
             

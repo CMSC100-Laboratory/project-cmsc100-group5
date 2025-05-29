@@ -79,7 +79,7 @@ const removeItemfromCart = async (req, res) => {
         }
 
         user.Cart = user.Cart.filter(item => item.productId.toString() !== productId);
-
+        user.markModified('Cart');
         await user.save();
     }  catch (error) {
         console.error('Error removing item to cart: ', error);
