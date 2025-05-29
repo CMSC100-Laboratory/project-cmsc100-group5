@@ -54,14 +54,15 @@ const getSalesReport = async (req, res) => {
                       if (productsSold[k].hasOwnProperty(products[j]["name"]))
                       {
                         console.log(products[j]["name"]);
-                        productsSold[k][products[j]["name"]] = productsSold[k][products[j]["name"]] + (products[j]["price"] * orders[i]["orderQuantity"]);
+                        productsSold[k][products[j]["name"]][0] = productsSold[k][products[j]["name"]][0] + (products[j]["price"] * orders[i]["orderQuantity"]);
+                        productsSold[k][products[j]["name"]][1] = productsSold[k][products[j]["name"]][1] + orders[i]["orderQuantity"];
                         alreadyExists = true;
                         break;
                       }
                     }
                     if (!alreadyExists)
                     {
-                      productsSold.push({[products[j]["name"]] : products[j]["price"] * orders[i]["orderQuantity"]});
+                      productsSold.push({[products[j]["name"]] : [(products[j]["price"] * orders[i]["orderQuantity"]), orders[i]["orderQuantity"]]});
                     }
                     break;
                 }
