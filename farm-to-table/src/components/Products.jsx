@@ -50,7 +50,7 @@ function Products(props) {
   };
 
   const showMessage = (isValid) => {
-    alert(isValid ? "Form validated!" : "Please fill out all fields.");
+    alert(isValid ? "Form validated!" : "Some fields are missing or invalid.");
   };
 
   // ensures each field is not null
