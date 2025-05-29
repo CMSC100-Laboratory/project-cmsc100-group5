@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
+import authenticationRouter from './routers/authenticationRouter.js';
 
 dotenv.config();    
 
@@ -35,8 +36,8 @@ async function connectDB() {
         process.exit(1); // Exit the process with failure
     }
 }
+//connect to express app
 const app = express();
-
 
 // Cors configuration
 app.use(cors());
@@ -44,6 +45,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 //Initialize Routers Here
+authenticationRouter(app)
 
 //start server
 connectDB().then(() => {
@@ -51,4 +53,6 @@ connectDB().then(() => {
         console.log(`Server is running on port ${PORT}`);
     });
 });
+
+
 
