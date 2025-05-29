@@ -3,8 +3,15 @@ import { LuArrowUpRight } from 'react-icons/lu';
 import logoImage from '../../assets/Sarii-Logo.png';
 import Lottie from "lottie-react";
 import animation from "../../assets/animation-apple.json"
+import { useNavigate } from 'react-router-dom';
 
 const Homepage = () => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate("/login")
+    }
+
     return (
         <div className="min-h-screen bg-complement font-inter">
             {/* Navbar */}
@@ -20,11 +27,11 @@ const Homepage = () => {
                 </div>
                 <div className="flex items-center space-x-2">
                     <span>
-                        <button className="flex items-center bg-blend-soft-light border-2 border-primary hover:bg-primary text-primary hover:text-complement font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
+                        <button onClick={handleClick} className="flex items-center bg-blend-soft-light border-2 border-primary hover:bg-primary text-primary hover:text-complement font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
                             Shop Now
                         </button>
                     </span>
-                    <button className="flex items-center bg-blend-soft-light hover:bg-primary text-primary hover:text-complement font-semibold py-2 px-2 rounded-full transition duration-300 ease-in-out transform hover:scale-105 border-2 border-primary">
+                    <button onClick={handleClick} className="flex items-center bg-blend-soft-light hover:bg-primary text-primary hover:text-complement font-semibold py-2 px-2 rounded-full transition duration-300 ease-in-out transform hover:scale-105 border-2 border-primary">
                         <LuArrowUpRight size={24} />
                     </button>
                 </div>
@@ -50,11 +57,11 @@ const Homepage = () => {
                     </p>
                     <div className="flex items-center space-x-2">
                         <span>
-                            <button className="flex items-center bg-primary hover:bg-secondary text-complement font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
+                            <button onClick={handleClick} className="flex items-center bg-primary hover:bg-secondary text-complement font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
                                 Shop Now
                             </button>
                         </span>
-                        <button className="flex items-center bg-secondary hover:bg-primary text-complement font-semibold py-2 px-2 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
+                        <button onClick={handleClick} className="flex items-center bg-secondary hover:bg-primary text-complement font-semibold py-2 px-2 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
                             <LuArrowUpRight size={24} />
                         </button>
                     </div>

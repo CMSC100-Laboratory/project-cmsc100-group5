@@ -19,21 +19,21 @@ import {
 
 const shopRouter = (app) => {
     // Product routes
-    app.get('/products', getAllProducts);
-    app.get('/product', getProductById);
-    app.get('/products-by-type', getProductByType);
+    app.get('/api/shop/products', getAllProducts);
+    app.get('/api/shop/product', getProductById);
+    app.get('/api/shop/products-by-type', getProductByType);
     
     // Shopping cart routes
-    app.post('/cart/add', addToCart);
-    app.post('/cart/remove', removeItemfromCart);
-    app.post('/cart/update', updateItem);
-    app.post('/cart/get', getCart);
-    app.post('/cart/clear', clearCart);
+    app.post('/api/cart/add', addToCart);
+    app.post('/api/cart/remove', removeItemfromCart);
+    app.post('/api/cart/update', updateItem);
+    app.post('/api/cart/get', getCart);
+    app.post('/api/cart/clear', clearCart);
     
     // Order routes
-    app.post('/orders/create', createOrder);
-    app.post('/orders/cancel', cancelOrder);
-    app.get('/orders/user', getUserOrders);
+    app.post('/api/orders/create', createOrder);
+    app.post('/api/orders/cancel', cancelOrder);
+    app.get('/api/orders/user', getUserOrders);
     
 };
 

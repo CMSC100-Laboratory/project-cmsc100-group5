@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
+import AuthContext from '../../context/AuthContext';
+import { useContext } from 'react';
 
 const productTypes = {
   0: 'Vegetables',
@@ -34,20 +36,22 @@ const imageMap = {
 };
 
 
-const Shop = ({ userEmail }) => {
+const Shop = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState('all');
   const [sortBy, setSortBy] = useState('name');
   const [sortOrder, setSortOrder] = useState('asc');
+  const {auth} = useContext(AuthContext);
+  const userEmail = auth.email;
 
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:3000/products');
+        const response = await api.get('/shop/products');
         if (response.data.success) {
           setProducts(response.data.products);
         } else {
@@ -82,7 +86,7 @@ const Shop = ({ userEmail }) => {
     //create a local instnce of the cart and set a boolean isInCart.
   const addToCart = async (productId, quantity = 1) => {
     try {
-      const response = await axios.post('http://localhost:3000/cart/add', {
+      const response = await api.post('/cart/add', {
         email: userEmail,
         productId,
         quantity

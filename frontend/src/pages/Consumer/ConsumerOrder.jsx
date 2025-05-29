@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
+import AuthContext from '../../context/AuthContext';
+import { useContext } from 'react';
 
 const productTypes = {
     1: 'Crop',
@@ -38,22 +40,22 @@ const imageMap = {
     'Chicken Breast (1kg)': 'chicken_breast.png',
 };
 
-const Orders = ({ userEmail }) => {
+const ConsumerOrders = () => {
     const [orderTransactions, setOrderTransactions] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [cancelMessage, setCancelMessage] = useState('');
+    const {auth} = useContext(AuthContext)
+    const userEmail = auth.email;
 
     useEffect(() => {
-    if (userEmail) {
-        fetchOrders();
-    }
-    }, [userEmail]);
+      fetchOrders();
+    }, []);
 
     const fetchOrders = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('http://localhost:3000/orders/user', {
+            const response = await api.get('/orders/user', {
                 params: {
                     email: userEmail
                 }
@@ -89,13 +91,9 @@ const Orders = ({ userEmail }) => {
                     
                     groupedOrders[transactionId].totalAmount += (order.productId?.price * order.orderQuantity || 0);
                 });
-                
                 setOrderTransactions(groupedOrders);
             } else {
-                setError('Failed to fetch orders');
-
-
-                
+                setError('Failed to fetch orders');  
             }
         } catch (err) {
             setError(`Error: ${err.message}`);
@@ -115,7 +113,7 @@ const Orders = ({ userEmail }) => {
     try {
       // Cancel all items in the transaction
         const cancelPromises = transaction.items.map(item =>
-            axios.post('http://localhost:3000/orders/cancel', {
+            api.post('/orders/cancel', {
                 email: userEmail,
                 orderId: item.id
             })
@@ -136,7 +134,6 @@ const Orders = ({ userEmail }) => {
       } else {
             alert('Some items could not be cancelled. Please try again.');
       }
-
     } catch (err) {
         console.error('Error cancelling order:', err);
         alert(`Error: ${err.message}`);
@@ -278,4 +275,4 @@ const Orders = ({ userEmail }) => {
   );
 };
 
-export default Orders;
+export default ConsumerOrders;

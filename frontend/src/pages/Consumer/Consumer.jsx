@@ -4,7 +4,7 @@ import axios from 'axios';
 import Header from './components/Header'
 import Shop from './components/Shop';
 import Cart from './components/Cart';
-import Orders from '../../components/Cart';
+import Orders from './ConsumerCart';
 
 const Consumer = () => {
     const [cartCount, setCartCount] = useState(0);

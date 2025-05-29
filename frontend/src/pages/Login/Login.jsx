@@ -21,7 +21,7 @@ const Login = () => {
         if (!isLoadingAuth && auth.isLoggedIn) {
             console.log("User is already logged in. Redirecting to previous page.");
             if (auth.userType === "Customer") {
-                navigate('/consumer');
+                navigate('/consumer/shop');
             } else if (auth.userType === "Merchant") {
                 navigate('/merchant');
             } else {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
+import { useContext } from 'react';
 
 const productTypes = {
   1: 'Crop',
@@ -10,10 +12,6 @@ const productTypes = {
   4: 'Meat',
   5: 'Others'
 };
-
-const api = axios.create({
-  baseURL: 'http://localhost:3000'
-});
 
 const imageMap = {
     'Tilapia (per kg)': 'tilapia.png',
@@ -37,7 +35,7 @@ const imageMap = {
     'Chicken Breast (1kg)': 'chicken_breast.png',
 };
 
-const Cart = ({ userEmail }) => {
+const ConsumerCart = () => {
   const [cart, setCart] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -45,17 +43,24 @@ const Cart = ({ userEmail }) => {
   const [error, setError] = useState(null);
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderMessage, setOrderMessage] = useState('');
+  const {auth, isLoadingAuth} = useContext(AuthContext);
+  const userEmail = auth.email;
 
   useEffect(() => {
-    if (userEmail) {
-      fetchCart();
-    }
-  }, [userEmail]);
+      if (!isLoadingAuth && userEmail) {
+          fetchCart();
+      } else if (!isLoadingAuth && !userEmail) {
+          setLoading(false);
+          setCart([]);
+          setTotalItems(0);
+          setTotalPrice(0);
+      }
+  },[userEmail, isLoadingAuth]);
 
   const fetchCart = async () => {
     try {
       setLoading(true);
-      const response = await axios.post('http://localhost:3000/cart/get', {
+      const response = await api.post('/cart/get', {
         email: userEmail
       });
       
@@ -87,7 +92,7 @@ const Cart = ({ userEmail }) => {
     if (newQuantity < 1) return;
   
     try {
-      const response = await axios.post('http://localhost:3000/cart/update', {
+      const response = await api.post('cart/update', {
         email: userEmail,
         productId,
         quantity: newQuantity,
@@ -124,7 +129,7 @@ const Cart = ({ userEmail }) => {
 
   const handleRemoveItem = async (productId) => {
     try {
-      const response = await axios.post('http://localhost:3000/cart/remove', {
+      const response = await api.post('/cart/remove', {
         email: userEmail,
         productId
       });
@@ -144,7 +149,7 @@ const Cart = ({ userEmail }) => {
     if (!window.confirm('Are you sure you want to clear your cart?')) return;
     
     try {
-      const response = await axios.post('http://localhost:3000/cart/clear', {
+      const response = await api.post('/cart/clear', {
         email: userEmail
       });
       
@@ -218,7 +223,7 @@ const Cart = ({ userEmail }) => {
           />
           <h3 className="text-xl font-medium text-gray-700">Your cart is empty</h3>
           <p className="text-gray-500 mt-2">Explore freshness. Add to cart now.</p>
-          <Link to="/">
+          <Link to="../shop">
           <button className="mt-3 bg-lime-700 hover:bg-lime-950 text-white font-bold py-2 px-6 rounded">
                   Shop now
             </button>
@@ -330,4 +335,4 @@ const Cart = ({ userEmail }) => {
   );
 };
 
-export default Cart;
+export default ConsumerCart;
