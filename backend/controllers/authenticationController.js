@@ -3,8 +3,9 @@ import User from "../models/userModel.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-//Authentication Methods
 
+const maxAge = 86400
+//Authentication Methods
 //Create Token
 const createToken = (user) => {
     return jwt.sign(
@@ -46,6 +47,16 @@ const signUp = async (req, res) => {
         console.log(user);
         //save user in database.
         await user.save();
+
+        const token = createToken(user);
+        console.log(token);
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.COOKIE_SECURE,
+            maxAge: maxAge * 1000,
+            sameSite: 'Lax'
+        });
         res.status(201).json({message: "User created sucessfully!"})
     } catch (error) {
         res.status(500).json({error: "An error has occured"})
@@ -76,7 +87,7 @@ const login = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.COOKIE_SECURE,
-            maxAge: process.env.COOKIE_MAX_AGE,
+            maxAge: maxAge * 1000,
             sameSite: 'Lax'
         });
 

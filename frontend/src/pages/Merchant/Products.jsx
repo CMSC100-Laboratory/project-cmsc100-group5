@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../api.js';
 
-function Products(props) {
+const Products = () => {
     const [products, setProducts] = useState([]);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
@@ -29,7 +29,7 @@ function Products(props) {
           }
   };
 
-  const fetchProducts = async (sortBy, order) => {
+  const fetchProducts = async (sortBy = 'name', order = 'asc') => { 
           try {
               const response = await api.get(`/sort-products?sortBy=${sortBy}&order=${order}`);
               setProducts(response.data);

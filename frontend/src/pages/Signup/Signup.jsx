@@ -29,9 +29,9 @@ const Signup = () => {
         if (!isLoadingAuth && auth.isLoggedIn) {
             console.log("User is already logged in. Redirecting to previous page.");
             if (auth.userType === "Customer") {
-                navigate('/consumer');
+                navigate('/consumer/shop');
             } else if (auth.userType === "Merchant") {
-                navigate('/merchant');
+                navigate('/merchant/sales');
             } else {
                 navigate('/');
             }
@@ -89,9 +89,9 @@ const Signup = () => {
             await fetchAuthStatus(); //fetch user creds
             //Navigation HERE
             if (auth.userType === "Customer") {
-                navigate('/consumer');
+                navigate('/consumer/shop');
             } else if (auth.userType === "Merchant") {
-                navigate('/merchant');
+                navigate('/merchant/sales');
             } else {
                 navigate('/');
             }

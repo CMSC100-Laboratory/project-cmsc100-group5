@@ -23,7 +23,7 @@ const Login = () => {
             if (auth.userType === "Customer") {
                 navigate('/consumer/shop');
             } else if (auth.userType === "Merchant") {
-                navigate('/merchant');
+                navigate('/merchant/sales');
             } else {
                 navigate('/');
             }
