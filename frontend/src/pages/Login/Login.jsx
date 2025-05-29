@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import logoImage from '../../assets/Sarii-Logo.png'
 import illustrationImage from '../../assets/market-illus.png'
 import { LuMail, LuLock, LuEye, LuEyeOff } from 'react-icons/lu';
 import api from "../../api.js";
+import AuthContext from '../../context/AuthContext.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     //State Management
@@ -11,6 +13,22 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const { fetchAuthStatus, auth, isLoadingAuth} = useContext(AuthContext);
+    const navigate = useNavigate();
+    
+    //useEffect
+    useEffect(() => {
+        if (!isLoadingAuth && auth.isLoggedIn) {
+            console.log("User is already logged in. Redirecting to previous page.");
+            if (auth.userType === "Customer") {
+                navigate('/consumer');
+            } else if (auth.userType === "Merchant") {
+                navigate('/merchant');
+            } else {
+                navigate('/');
+            }
+        }
+    }, [auth.isLoggedIn, isLoadingAuth, navigate]); 
 
     //Function
     const handleSubmit = async (e) => {
@@ -20,13 +38,16 @@ const Login = () => {
         try {
             const response = await api.post('/auth/login', { email, password }, {
             });
+            await fetchAuthStatus();
+            alert('Login successful!');
 
-            console.log('Login successful!', response.data);
-
-
-            // You might redirect the user here or update global state
-            alert('Login successful! (Check your browser console for API response)'); // For demonstration
-
+            if (auth.userType === "Customer") {
+                navigate('/consumer');
+            } else if (auth.userType === "Merchant") {
+                navigate('/merchant');
+            } else {
+                navigate('/');
+            }
         } catch (err) {
             if (err.response) {
                 // The server responded with a status code outside the 2xx range

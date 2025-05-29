@@ -1,41 +1,40 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import AuthContext from "../context/AuthProvider.jsx";
-import {jwtDecode} from "jwt-decode";
+import AuthContext from "../context/AuthContext";
+
 // ProtectedRoute Component
 const ProtectedRoute = ({ element, allowedRoles }) => {
-    try {
-        // Retrieve accessToken from cookie
-        const accessToken = sessionStorage.getItem("accessToken");
-        const username = sessionStorage.getItem("username");
-        if (!accessToken) {
-            console.log("No access token found, redirecting to login");
-            return <Navigate to="/login" replace />;
+    const { auth, isLoadingAuth, fetchAuthStatus } = useContext(AuthContext);
+    
+    const [isAuthChecked, setIsAuthChecked] = useState(false);
+
+    useEffect(() => {
+        //check is a user is authentication
+        if (!auth.isLoggedIn && !isLoadingAuth && !isAuthChecked) { //if not proceed with authenticating with cookie token
+            fetchAuthStatus().finally(() => {
+                setIsAuthChecked(true);
+            });
+        } else if (auth.isLoggedIn || !isLoadingAuth) {
+            setIsAuthChecked(true);
         }
+    }, [auth.isLoggedIn, isLoadingAuth, fetchAuthStatus, isAuthChecked]);
 
-        const decodedToken = jwtDecode(accessToken);
-        // Retrieve the user's role from sessionStorage or decode the JWT if required
-        // Assuming the user's role is still part of `auth` in context for now
-        const { auth } = useContext(AuthContext);
+    if (isLoadingAuth || !isAuthChecked) {
+        return <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-700">Loading authentication...</div>;
+    }
 
-        // Ensure auth is consistent if still using context for role checks
-        if (allowedRoles && (!auth || !allowedRoles.includes(decodedToken.userType))) {
-            console.log("User role is not allowed, redirecting to unauthorized");
-            return <Navigate to="/unauthorized" replace />;
-        }
-
-        // If username is not already in sessionStorage, store it
-        if (!username && auth?.email) {
-            sessionStorage.setItem("username", auth.email.replace("@up.edu.ph", "").trim());
-        }
-
-        return element; // Render the protected component
-    } catch (error) {
-        console.log("Error in ProtectedRoute: ", error);
+    if (!auth.isLoggedIn) {
+        console.log("User is not logged in, redirecting to /login.");
         return <Navigate to="/login" replace />;
     }
+
+    if (allowedRoles && (!auth.userType || !allowedRoles.includes(auth.userType))) {
+        console.log(`User role (${auth.userType}) is not allowed for this route, redirecting to /unauthorized.`);
+        return <Navigate to="/unauthorized" replace />;
+    }
+
+    // If authenticated and authorized, render the protected component.
+    return element;
 };
 
 export default ProtectedRoute;
-
-

@@ -3,7 +3,9 @@ import logoImage from '../../assets/Sarii-Logo.png'
 import illustrationImage from '../../assets/market-illus.png'
 import { LuMail, LuLock, LuEye, LuEyeOff, LuArrowLeft, LuUser } from 'react-icons/lu';
 import api from "../../api.js";
-
+import AuthContext from '../../context/AuthContext.jsx';
+import { useNavigate } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
 
 const Signup = () => {
     //State Management
@@ -19,9 +21,24 @@ const Signup = () => {
     const [currentStep, setCurrentStep] = useState(1); // 1 for personal info, 2 for account info
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const {fetchAuthStatus, auth, isLoadingAuth} = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    //useEffect
+    useEffect(() => {
+        if (!isLoadingAuth && auth.isLoggedIn) {
+            console.log("User is already logged in. Redirecting to previous page.");
+            if (auth.userType === "Customer") {
+                navigate('/consumer');
+            } else if (auth.userType === "Merchant") {
+                navigate('/merchant');
+            } else {
+                navigate('/');
+            }
+        }
+    }, [auth.isLoggedIn, isLoadingAuth, navigate]); 
 
     //Functions
-
     const handleContinue = (e) => {
         e.preventDefault();
         setError(''); // Clear previous errors
@@ -68,10 +85,16 @@ const Signup = () => {
             });
 
             console.log('Signup successful!', response.data);
-            alert('Account created successfully! You can now log in.');
-
+            alert('Account created successfully!');
+            await fetchAuthStatus(); //fetch user creds
             //Navigation HERE
-
+            if (auth.userType === "Customer") {
+                navigate('/consumer');
+            } else if (auth.userType === "Merchant") {
+                navigate('/merchant');
+            } else {
+                navigate('/');
+            }
         } catch (err) {
             if (err.response) {
                 setError(err.response.data.error || 'Signup failed. Please try again.');
@@ -259,7 +282,7 @@ const Signup = () => {
                         </form>
                     </div>
 
-                    <p className="mt-4 text-gray-600 text-md">
+                    <p className="mt-4 text-gray-600 text-md text-center">
                         Already have an account?{' '}
                         <a href="/login" className="text-secondary hover:text-primary font-semibold transition duration-200">
                             Login

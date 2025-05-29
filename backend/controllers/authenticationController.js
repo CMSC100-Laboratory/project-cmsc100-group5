@@ -93,7 +93,6 @@ const logout = (req,res) => {
 }
 
 //Function for retrieve user info 
-
 const getProfile = (req,res) => {
     res.status(201).json({
         message: "Access Granted",
