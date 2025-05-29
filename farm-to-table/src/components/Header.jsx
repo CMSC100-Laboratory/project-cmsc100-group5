@@ -33,14 +33,17 @@ function Header() {
               : "text-gray-400 hover:text-white" 
           }>Products</NavLink>
         </div>
+        
 
-        <div className="mt-2 md:mt-0">
+        {/* eto yung lalagyanan ng search bar. comment ko lang since baka need */}
+        {/* <div className="mt-2 md:mt-0">
           <input
             type="text"
             placeholder="Search..."
             className="px-3 py-1 rounded-md bg-white text-black focus:outline-none focus:ring-2 focus:ring-green-500"
           />
-        </div>
+        </div> */}
+
       </div>
     </nav>
   );
