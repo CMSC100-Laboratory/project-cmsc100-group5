@@ -4,6 +4,7 @@ import Product from "../models/productModel.js";
 
 // this will get the list of all products sold (has an orderStatus of 1) and the total sales
 const getSalesReport = async (req, res) => {
+    console.log("hello");
     try 
     {
       const orders = await OrderTransaction.find();
