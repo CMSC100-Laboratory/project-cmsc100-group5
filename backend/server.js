@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import authenticationRouter from './routers/authenticationRouter.js';
 import cookieParser from 'cookie-parser';
+import shopRouter from './routers/ShopRoutes.js';
 
 dotenv.config();    
 
@@ -54,6 +55,7 @@ app.use(cookieParser());
 
 //Initialize Routers Here
 authenticationRouter(app)
+shopRouter(app)
 
 //start server
 connectDB().then(() => {
