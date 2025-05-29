@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
-import adminRouter from './routes/adminRouter.js'; //import the router function
+import adminRouter from './routers/adminRouter.js'; //import the router function
 
 dotenv.config();    
 
