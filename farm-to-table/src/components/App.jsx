@@ -12,6 +12,13 @@ function App() {
     const [products, setProducts] = useState([]);
     const [orders, setOrders] = useState([]);
 
+    const deleteUser = async (email) => {
+        console.log("hello bitachh")
+        console.log(email)
+        await axios.post("http://localhost:3000/delete-product", {email: email})
+        .then(res => console.log(res.data))
+        .catch(err => console.error(err));
+    };
 
     const fetchUsers = async () => {
         try {
@@ -198,7 +205,6 @@ function App() {
         }
     }
     useEffect(() => {
-        fetchUsers();
         fetchProducts('quantity', 'asc');
         fetchOrders();
     }, []);
@@ -207,7 +213,7 @@ function App() {
             <Header />
             <Routes>
                 <Route path = "/sales" element={<Sales/>}/>
-                <Route path="/users" element={<Users users={users}/>}/>
+                <Route path="/users" element={<Users/>}/>
                 <Route path="/products" 
                 element={
                 <Products products={products} 

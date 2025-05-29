@@ -22,5 +22,17 @@ const getAllUsers = async (req, res) => {
     }
   };
 
+const deleteUser = async (req, res) => {
+  try {
+    console.log("hellloooo");
+    await User.deleteOne({email: req.body.email})
+    console.log("success")
+    res.status(200).send("success");
+  } catch (error) {
+    console.log("fail")
+    res.status(500).json({ message: 'Error deleting user', error });
+  }
+};
 
-export {getAllUsers};
+
+export {getAllUsers, deleteUser};

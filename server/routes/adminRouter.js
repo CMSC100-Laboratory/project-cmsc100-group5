@@ -1,7 +1,7 @@
 //import functions from controller
 import { getAllOrders, updateOrderStatus } from "../controllers/orderController.js";
 import { addProduct, sortProducts, decreaseQuantity, updateProduct, removeProduct, fetchProductById } from "../controllers/productController.js";
-import { getAllUsers } from "../controllers/userController.js";
+import { getAllUsers, deleteUser } from "../controllers/userController.js";
 import { getSalesReport } from "../controllers/salesReportController.js";
 
 //assign routes
@@ -16,6 +16,7 @@ const adminRouter = (app) => {
     app.post("/decrease-quantity", decreaseQuantity);  //k
     app.post("/update-product", updateProduct); //k
     app.post("/remove-product", removeProduct); //k
+    app.post("/delete-product", deleteUser); //k
 };
 
 //export router
