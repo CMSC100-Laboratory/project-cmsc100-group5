@@ -29,11 +29,12 @@ const addToCart = async (req, res) => {
         }
 
         const itemExists = user.Cart.findIndex(
-            item => item.productId.toString() === productId
+            item => item.productId.toString() === productId.toString()
         );
         
         if (itemExists >= 0){
             user.Cart[itemExists].quantity += parseInt(quantity);
+            user.markModified('Cart');
         } else{
             user.Cart.push({
                 
@@ -48,10 +49,13 @@ const addToCart = async (req, res) => {
 
         await user.save();
 
+        const totalItems = user.Cart.reduce((sum, item) => sum + item.quantity, 0);
+
         res.status(200).json({ 
             success: true, 
             message: 'Item added to cart successfully',
-            cart: user.Cart 
+            cart: user.Cart,
+            totalItems: totalItems
         });       
 
 
@@ -107,19 +111,19 @@ const updateItem = async (req, res) => {
         }
 
         const itemExists = user.Cart.findIndex(
-            item => item.productId.toString() === productId
+        item => item.productId.toString() === productId.toString()
         );
 
-        if(itemExists < 0){
-            return res.status(404).json({
-                success: false, error: 'Item not found in cart'
-            });
+        if (itemExists < 0) {
+        return res.status(404).json({
+            success: false, error: 'Item not found in cart'
+        });
         }
 
         user.Cart[itemExists].quantity = parseInt(quantity);
-
-
+        user.markModified('Cart');
         await user.save();
+
 
         res.status(200).json({ 
             success: true, 
@@ -152,7 +156,6 @@ const getCart = async (req, res) => {
         const product = await Product.findById(item.productId);
         if (!product) return null; 
         
-        //resolved: passed the whole product data.
         return {
           productId: item.productId,
           product: product,
@@ -165,7 +168,6 @@ const getCart = async (req, res) => {
       
       const filteredCart = populatedCart.filter(item => item !== null);
       
-      // Calculate totals
       const totalItems = filteredCart.reduce((sum, item) => sum + item.quantity, 0);
       const totalPrice = filteredCart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
       
