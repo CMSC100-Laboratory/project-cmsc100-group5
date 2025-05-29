@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import authenticationRouter from './routers/authenticationRouter.js';
 import cookieParser from 'cookie-parser';
 import shopRouter from './routers/ShopRoutes.js';
+import adminRouter from './routers/adminRouter.js'; //import the router function
 
 dotenv.config();    
 
@@ -56,6 +57,7 @@ app.use(cookieParser());
 //Initialize Routers Here
 authenticationRouter(app)
 shopRouter(app)
+adminRouter(app)
 
 //start server
 connectDB().then(() => {
@@ -63,6 +65,3 @@ connectDB().then(() => {
         console.log(`Server is running on port ${PORT}`);
     });
 });
-
-
-

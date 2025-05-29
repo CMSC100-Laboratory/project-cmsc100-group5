@@ -11,6 +11,12 @@ import ConsumerHeader from './components/ConsumerHeader.jsx'
 import Shop from './pages/Consumer/ConsumerShop.jsx'
 import ConsumerOrders from './pages/Consumer/ConsumerOrder.jsx'
 import ConsumerCart from './pages/Consumer/ConsumerCart.jsx'
+import MerchantHeader from './components/MerchantHeader.jsx'
+import path from 'path'
+import Orders from './pages/Merchant/Orders.jsx'
+import Products from './pages/Merchant/Products.jsx'
+import Sales from './pages/Merchant/Sales.jsx'
+import Users from './pages/Merchant/Users.jsx'
 
 
 function App() {
@@ -33,7 +39,25 @@ function App() {
     },
         {
       path: "/merchant",
-      element: <ProtectedRoute element={<Merchant />} allowedRoles={["Merchant"]} />,
+      element: <ProtectedRoute element={<MerchantHeader />} allowedRoles={["Merchant"]} />,
+      children: [
+        {
+          path: "orders",
+          element: <Orders/>
+        },
+        {
+          path: "products",
+          element: <Products/>
+        },
+        {
+          path: "sales",
+          element: <Sales/>
+        },
+        {
+          path: "users",
+          element: <Users/>
+        },
+      ]
     },
     {
       path: "/consumer",
