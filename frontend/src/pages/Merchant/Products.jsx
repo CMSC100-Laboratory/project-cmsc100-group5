@@ -50,6 +50,7 @@ const Products = () => {
             }
             setProducts((previousState)=>[...previousState, response.data.product])
             console.log("Product added to inventory:", response.data.product);
+            await fetchProducts();
         }catch (error){
             console.error('Failed to add product:', error.message);
         }
@@ -263,6 +264,7 @@ const Products = () => {
                                 quantity: '',
                               });
                             }
+                            fetchProducts();
                         }}
                         className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                         >
