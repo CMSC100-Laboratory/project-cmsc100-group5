@@ -37,6 +37,9 @@ const imageMap = {
     'Coconut': 'coconut.png',
     'Russet Potatoes': 'russet_potatoes.png',
     'Chicken Breast (1kg)': 'chicken_breast.png',
+    'Beef': 'beef.png',
+    'Chicken Legs': 'chicken_leg.png',
+    'Chicken Thighs': 'chicken_thigh.png',
 };
 
 const ConsumerOrders = () => {
