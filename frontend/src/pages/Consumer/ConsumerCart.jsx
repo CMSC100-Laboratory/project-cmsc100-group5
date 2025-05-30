@@ -6,7 +6,6 @@ import { useContext } from 'react';
 
 const productTypes = {
   1: 'Crop',
-  0: 'Vegetables',
   2: 'Poultry',
   3: 'Dairy',
   4: 'Meat',

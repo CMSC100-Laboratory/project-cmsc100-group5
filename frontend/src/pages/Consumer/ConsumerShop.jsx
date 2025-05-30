@@ -4,7 +4,6 @@ import AuthContext from '../../context/AuthContext';
 import { useContext } from 'react';
 
 const productTypes = {
-  0: 'Vegetables',
   1: 'Crop',
   2: 'Poultry',
   3: 'Dairy',
@@ -33,6 +32,9 @@ const imageMap = {
     'Coconut': 'coconut.png',
     'Russet Potatoes': 'russet_potatoes.png',
     'Chicken Breast (1kg)': 'chicken_breast.png',
+    'Beef': 'beef.png',
+    'Chicken Legs': 'chicken_leg.png',
+    'Chicken Thighs': 'chicken_thigh.png',
 };
 
 
